@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاسبه BMI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>محاسبه شاخص توده بدنی (BMI)</h1>
+    <form id="bmiForm">
+        <input type="number" id="weight" placeholder="وزن (کیلوگرم)" required>
+        <input type="number" id="height" placeholder="قد (متر)" step="0.01" required>
+        <br />
+        <button type="button" onclick="calculateBMI()">محاسبه</button>
+        <div class="result" id="result"></div>
+    </form>
+
+    <script>
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById("weight").value);
+            const height = parseFloat(document.getElementById("height").value);
+
+            if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+                document.getElementById("result").innerText = "لطفاً مقادیر معتبر وارد کنید!";
+                return;
+            }
+
+            const bmi = (weight / (height ** 2)).toFixed(2); // محاسبه BMI
+
+            let message;
+            if (bmi < 18.5) {
+                message = "کم‌وزن";
+            } else if (bmi >= 18.5 && bmi < 24.9) {
+                message = "وزن سالم";
+            } else if (bmi >= 25 && bmi < 29.9) {
+                message = "اضافه وزن";
+            } else {
+                message = "چاقی";
+            }
+
+            document.getElementById("result").innerHTML = `
+                BMI : <strong>${bmi}</strong><br>
+                وضعیت: <strong>${message}</strong>
+            `;
+        }
+    </script>
+</body>
+
+</html>
